@@ -37,6 +37,9 @@ export default createStore({
     REMOVE_PRODUCT(state, id) {
       state.products.splice(state.products.findIndex(el => el.id === id), 1);
     },
+    ADD_NEW_GOOD(state, data) {
+      state.products.unshift(data);
+    }
   },
   actions: {
   },

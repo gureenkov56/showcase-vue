@@ -6,10 +6,15 @@
         <form>
           <label for="name">Наименование товара<span class="required">*</span></label>
           <input v-model="name"
+                 :class="{'error' : errorInRequired.includes('name')}"
                  type="text"
                  id="name"
                  placeholder="Введите наименование товара"
           >
+          <div :class="{'show' : errorInRequired.includes('name')}"
+               class="error-text">
+            Поле является обязательным
+          </div>
 
           <label for="name">Описание товара</label>
           <textarea v-model="description"
@@ -20,19 +25,35 @@
 
           <label for="name">Ссылка на изображение товара<span class="required">*</span></label>
           <input v-model="linkToImg"
+                 :class="{'error' : errorInRequired.includes('linkToImg')}"
                  type="text"
                  id="linkToImg"
                  placeholder="Введите ссылку товара"
           >
+          <div :class="{'show' : errorInRequired.includes('linkToImg')}"
+               class="error-text">
+            Поле является обязательным
+          </div>
+
 
           <label for="name">Цена товара<span class="required">*</span></label>
           <input v-model="price"
-                 type="text"
+                 :class="{'error' : errorInRequired.includes('price')}"
+                 type="number"
                  id="price"
-                 placeholder="Введите цены"
+                 placeholder="Введите цену"
           >
+          <div :class="{'show' : errorInRequired.includes('price')}"
+               class="error-text">
+            Поле является обязательным
+          </div>
 
-          <button :class="{ 'active' : name && linkToImg && price }">Добавить товар</button>
+          <button :class="{ 'active' : name && linkToImg && price }"
+                  @click="validateAndSubmitForm"
+                  type="button"
+          >
+            Добавить товар
+          </button>
         </form>
       </aside>
       <div class="add-goods__showcase">
@@ -45,6 +66,7 @@
 <script>
 import PageTitle from "@/components/PageTitle";
 import ShowCase from "@/components/ShowCase";
+import store from "@/store";
 
 export default {
   components: {PageTitle, ShowCase},
@@ -52,8 +74,45 @@ export default {
     name: '',
     description: '',
     linkToImg: '',
-    price: ''
-  })
+    price: '',
+    errorInRequired: []
+  }),
+  methods: {
+    validateAndSubmitForm() {
+      if (!this.name) this.errorInRequired.push('name');
+      if (!this.linkToImg) this.errorInRequired.push('linkToImg');
+      if (!this.price) this.errorInRequired.push('price');
+
+      if (this.errorInRequired.length === 0) {
+        store.commit('ADD_NEW_GOOD', {
+          id: Date.now(),
+          title: this.name,
+          description: this.description,
+          images: [this.linkToImg],
+          price: this.price
+        })
+
+        this.name = '';
+        this.description = '';
+        this.linkToImg = '';
+        this.price = '';
+      }
+    },
+    removeMeFromErrorList(item) {
+      this.errorInRequired.splice(this.errorInRequired.indexOf(item), 1);
+    }
+  },
+  watch: {
+    name() {
+      if (this.name && this.errorInRequired.includes('name')) this.removeMeFromErrorList('name');
+    },
+    linkToImg() {
+      if (this.linkToImg && this.errorInRequired.includes('linkToImg')) this.removeMeFromErrorList('linkToImg');
+    },
+    price() {
+      if (this.price && this.errorInRequired.includes('price')) this.removeMeFromErrorList('price');
+    }
+  }
 }
 </script>
 
@@ -79,6 +138,8 @@ export default {
 
       label {
         font-size: .9rem;
+        margin-top: 1rem;
+        display: block;
 
         .required {
           color: red;
@@ -98,9 +159,36 @@ export default {
         display: block;
         padding: 10px 20px;
         outline: none;
-        margin: 10px 0 20px 0;
+        margin-top: 10px;
         width: 100%;
         box-sizing: border-box;
+
+        &.error {
+          border: 1px solid red;
+        }
+      }
+
+      /* HIDE ARROWS ON input[type='number'] */
+      /* Chrome, Safari, Edge, Opera */
+      input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
+      /* Firefox */
+      input[type=number] {
+        -moz-appearance: textfield;
+      }
+
+      .error-text {
+        color: red;
+        font-size: .8rem;
+        display: none;
+
+        &.show {
+          display: block;
+        }
       }
 
       button {
@@ -111,6 +199,7 @@ export default {
         width: 100%;
         cursor: pointer;
         transition: background-color .3s;
+        margin-top: 1rem;
 
         &.active {
           background-color: #7BAE73;
