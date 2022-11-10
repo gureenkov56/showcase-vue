@@ -1,35 +1,39 @@
 <template>
   <div class='product-cart'>
-    <button class="product-cart__remove-btn">
+    <button v-if="removeButton"
+        class="product-cart__remove-btn"
+    >
       <img src="@/assets/images/svg/trash.svg" alt="remove">
     </button>
     <div class="product-cart__image">
-      <img src="https://m.media-amazon.com/images/I/71Hy3IHViRL.jpg" alt="product image">
+      <img :src="product.images[0]" alt="product image">
     </div>
     <div class="product-cart__info">
-      <h3>Название</h3>
-      <p>Довольно-таки интересное описание товара в несколько строк. Довольно-таки интересное описание товара в
-        несколько строк</p>
-      <div class="price">10 000 руб.</div>
+      <h3>{{ product.title }}</h3>
+      <p>{{ product.description }}</p>
+      <div class="price">{{ product.price }} руб.</div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'ProductCart'
+  name: 'ProductCart',
+  props: [
+    'product',
+    'removeButton'
+  ]
 }
 </script>
 
 <style lang="scss" scoped>
 .product-cart {
   position: relative;
-  max-width: 332px;
+  max-width: 380px;
   border-radius: 6px;
   background-color: #fff;
   cursor: pointer;
   transition: box-shadow .3s;
-  margin: 10px;
 
   &__remove-btn {
     position: absolute;
@@ -57,7 +61,7 @@ export default {
   &__image {
     img {
       width: 100%;
-      border-radius: 6px;
+      border-radius: 6px 6px 0 0;
       max-height: 200px;
       object-fit: cover;
     }
