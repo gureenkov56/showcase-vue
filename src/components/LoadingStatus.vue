@@ -30,6 +30,7 @@ export default {
 <style lang="scss" scoped>
 .loading-status {
   text-align: center;
+  margin-top: 2rem;
   .error {
     color: #f37070;
   }

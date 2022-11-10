@@ -6,16 +6,18 @@
                   :removeButton="showRmBtn"
     />
   </div>
+  <loading-status/>
 </template>
 
 <script>
 import {mapState} from "vuex";
 import ProductCart from "@/components/ProductCart";
 import store from "@/store";
+import LoadingStatus from "@/components/LoadingStatus";
 
 export default {
   name: "ShowCase",
-  components: {ProductCart},
+  components: {ProductCart, LoadingStatus},
   props: ['showRmBtn'],
   computed: {
     ...mapState([
@@ -26,7 +28,6 @@ export default {
     const timer = setInterval(() => {
       const coords = this.$refs.showcase.getBoundingClientRect();
       if (coords.bottom - window.innerHeight < 250) {
-        console.log(coords.bottom - window.innerHeight);
         fetch(`https://api.escuelajs.co/api/v1/products?offset=${store.state.pagination}&limit=10`)
             .then(res => {
               if (!res.ok) throw new Error('Something went wrong');
@@ -48,6 +49,8 @@ export default {
 .showcase {
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-around;
   gap: 20px;
+  margin-top: 1rem;
 }
 </style>

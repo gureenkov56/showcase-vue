@@ -37,7 +37,7 @@ export default {
 <style lang="scss" scoped>
 .product-cart {
   position: relative;
-  width: 380px;
+  width: 300px;
   border-radius: 6px;
   background-color: #fff;
   cursor: pointer;

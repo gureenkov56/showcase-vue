@@ -12,18 +12,14 @@
         <img src="@/assets/images/svg/arrow-left.svg" alt="arrow">
       </div>
     </div>
-    <loading-status/>
   </div>
-
 </template>
 
 <script>
-import LoadingStatus from "@/components/LoadingStatus";
 import store from "@/store";
 
 export default {
   name: "PageTitle",
-  components: {LoadingStatus},
   data: () => ({
     sortBy: 'default'
   }),
@@ -39,6 +35,8 @@ export default {
 .pageTitle {
   &__top {
     display: flex;
+    flex-wrap: wrap;
+
     justify-content: space-between;
     align-items: center;
 
@@ -46,7 +44,6 @@ export default {
       position: relative;
       select {
         appearance: none;
-        //display: block;
         border: none;
         height: 2.5rem;
         border-radius: 4px;
@@ -54,6 +51,7 @@ export default {
         outline: none;
         padding: 0 40px 0 20px;
         color: #B4B4B4;
+
 
         &~img {
           display: block;
@@ -64,13 +62,9 @@ export default {
           width: 20px;
           height: 20px;
           transform: rotate(-90deg);
-
-
         }
       }
     }
-
-
   }
 }
 
