@@ -28,7 +28,7 @@ export default {
     const timer = setInterval(() => {
       const coords = this.$refs.showcase.getBoundingClientRect();
       if (coords.bottom - window.innerHeight < 250) {
-        fetch(`https://api.escuelajs.co/api/v1/products?offset=${store.state.pagination}&limit=10`)
+        fetch(`https://api.escuelajs.co/api/v1/products?offset=${store.state.pagination * 10}&limit=10`)
             .then(res => {
               if (!res.ok) throw new Error('Something went wrong');
               return res.json();
