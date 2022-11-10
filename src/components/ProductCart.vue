@@ -1,7 +1,7 @@
 <template>
   <div class='product-cart'>
     <button class="product-cart__remove-btn">
-      <img src="@/assets/trash.svg" alt="remove">
+      <img src="@/assets/images/svg/trash.svg" alt="remove">
     </button>
     <div class="product-cart__image">
       <img src="https://m.media-amazon.com/images/I/71Hy3IHViRL.jpg" alt="product image">
@@ -11,8 +11,6 @@
       <p>Довольно-таки интересное описание товара в несколько строк. Довольно-таки интересное описание товара в
         несколько строк</p>
       <div class="price">10 000 руб.</div>
-
-
     </div>
   </div>
 </template>
@@ -23,14 +21,15 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .product-cart {
-  position: absolute;
+  position: relative;
   max-width: 332px;
   border-radius: 6px;
   background-color: #fff;
   cursor: pointer;
   transition: box-shadow .3s;
+  margin: 10px;
 
   &__remove-btn {
     position: absolute;

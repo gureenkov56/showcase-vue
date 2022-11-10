@@ -16,6 +16,25 @@
   </main>
 </template>
 
+<script>
+import store from "@/store";
+
+export default {
+  mounted() {
+    fetch('https://api.escuelajs.co/api/v1/products?offset=10&limit=10')
+    .then(res => {
+      if (!res.ok) throw new Error('Something went wrong');
+      return res.json();
+    })
+    .then(res => store.commit('SET_PRODUCT', res))
+    .catch(error => {
+      store.commit('SET_ERROR_LOAD');
+      console.log(error);
+    })
+  }
+}
+</script>
+
 <style lang="scss">
 @import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200;400;600&display=swap");
 
@@ -51,7 +70,7 @@ body {
     }
 
     main {
-      max-width: 1000px;
+      max-width: 1200px;
       margin: 0 auto;
       padding: 20px;
     }
