@@ -3,7 +3,8 @@ import { createStore } from 'vuex'
 export default createStore({
   state: {
     products: [],
-    errorLoad: ''
+    errorLoad: '',
+    pagination: 0,
   },
   getters: {
     lengthOfProductsList(state) {
@@ -12,7 +13,8 @@ export default createStore({
   },
   mutations: {
     SET_PRODUCT(state, data) {
-        state.products = data;
+        state.products.push(...data);
+        state.pagination++;
     },
     SET_ERROR_LOAD(state) {
       state.errorLoad = 'Опс... Ошибка загрузки. Попробуйте обновить страницу.';
@@ -34,7 +36,7 @@ export default createStore({
     },
     REMOVE_PRODUCT(state, id) {
       state.products.splice(state.products.findIndex(el => el.id === id), 1);
-    }
+    },
   },
   actions: {
   },

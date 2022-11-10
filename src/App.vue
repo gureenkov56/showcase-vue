@@ -21,7 +21,7 @@ import store from "@/store";
 
 export default {
   mounted() {
-    fetch('https://api.escuelajs.co/api/v1/products?offset=10&limit=10')
+    fetch('https://api.escuelajs.co/api/v1/products?offset=0&limit=10')
     .then(res => {
       if (!res.ok) throw new Error('Something went wrong');
       return res.json();
@@ -52,6 +52,9 @@ body {
       padding: 20px;
       box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
       background-color: #fff;
+      position: sticky;
+      top: 0;
+      z-index: 10;
 
       ul {
         display: flex;
