@@ -1,7 +1,8 @@
 <template>
   <div class='product-cart'>
     <button v-if="removeButton"
-        class="product-cart__remove-btn"
+            @click="removeProducts(product.id)"
+            class="product-cart__remove-btn"
     >
       <img src="@/assets/images/svg/trash.svg" alt="remove">
     </button>
@@ -17,23 +18,31 @@
 </template>
 
 <script>
+import store from "@/store";
+
 export default {
   name: 'ProductCart',
   props: [
     'product',
     'removeButton'
-  ]
+  ],
+  methods: {
+    removeProducts(id) {
+      store.commit('REMOVE_PRODUCT', id);
+    }
+  }
 }
 </script>
 
 <style lang="scss" scoped>
 .product-cart {
   position: relative;
-  max-width: 380px;
+  width: 380px;
   border-radius: 6px;
   background-color: #fff;
   cursor: pointer;
   transition: box-shadow .3s;
+  flex-grow: 1;
 
   &__remove-btn {
     position: absolute;
@@ -48,6 +57,7 @@ export default {
     border-radius: 6px;
     border: none;
     background-color: #F08183;
+    cursor: pointer;
   }
 
   &:hover {

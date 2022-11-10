@@ -31,6 +31,8 @@ export default {
       store.commit('SET_ERROR_LOAD');
       console.log(error);
     })
+
+
   }
 }
 </script>
