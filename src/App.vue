@@ -1,29 +1,59 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+  <header>
+    <nav>
+      <ul>
+        <li>
+          <router-link to="/">Каталог</router-link>
+        </li>
+        <li>
+          <router-link to="/add-good">Добавить товары</router-link>
+        </li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <router-view />
+  </main>
 </template>
 
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200;400;600&display=swap");
 
-nav {
-  padding: 30px;
+body {
+  margin: 0;
+  background-color: #FAF9F7;
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
+  #app {
+    font-family: "Source Sans Pro", sans-serif;
+    color: #3F3F3F;
 
-    &.router-link-exact-active {
-      color: #42b983;
+    header {
+      padding: 20px;
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+      background-color: #fff;
+
+      ul {
+        display: flex;
+        flex-wrap: wrap;
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+
+        li {
+          margin-right: 1rem;
+
+          a {
+            text-decoration: none;
+            color: #3f3f3f;
+          }
+        }
+      }
+    }
+
+    main {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px;
     }
   }
 }
