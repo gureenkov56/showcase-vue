@@ -7,7 +7,14 @@
       <img src="@/assets/images/svg/trash.svg" alt="remove">
     </button>
     <div class="product-cart__image">
-      <img :src="product.images[0]" alt="product image">
+      <img v-if="product.images[0]"
+           :src="product.images[0]"
+           alt="product image"
+      >
+      <img v-else
+           src="@/assets/images/content/default.png"
+           alt="product image"
+      >
     </div>
     <div class="product-cart__info">
       <h3>{{ product.title }}</h3>
