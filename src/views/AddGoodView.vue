@@ -11,7 +11,7 @@
                  id="name"
                  placeholder="Введите наименование товара"
           >
-          <div :class="{'show' : errorInRequired.includes('name')}"
+          <div v-show="errorInRequired.includes('name')"
                class="error-text">
             Поле является обязательным
           </div>
@@ -30,7 +30,7 @@
                  id="linkToImg"
                  placeholder="Введите ссылку товара"
           >
-          <div :class="{'show' : errorInRequired.includes('linkToImg')}"
+          <div v-show="errorInRequired.includes('linkToImg')"
                class="error-text">
             Поле является обязательным
           </div>
@@ -43,7 +43,7 @@
                  id="price"
                  placeholder="Введите цену"
           >
-          <div :class="{'show' : errorInRequired.includes('price')}"
+          <div v-show="errorInRequired.includes('price')"
                class="error-text">
             Поле является обязательным
           </div>
@@ -184,11 +184,6 @@ export default {
       .error-text {
         color: red;
         font-size: .8rem;
-        display: none;
-
-        &.show {
-          display: block;
-        }
       }
 
       button {
