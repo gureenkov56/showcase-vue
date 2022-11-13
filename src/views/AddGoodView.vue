@@ -3,7 +3,7 @@
     <page-title>Добавить товар</page-title>
     <div class="add-goods">
       <aside>
-        <form>
+        <form @submit.prevent="validateAndSubmitForm">
           <label for="name">Наименование товара<span class="required">*</span></label>
           <input v-model="name"
                  :class="{'error' : errorInRequired.includes('name')}"
@@ -48,10 +48,7 @@
             Поле является обязательным
           </div>
 
-          <button :class="{ 'active' : name && linkToImg && price }"
-                  @click="validateAndSubmitForm"
-                  type="button"
-          >
+          <button :class="{ 'active' : name && linkToImg && price }">
             Добавить товар
           </button>
         </form>

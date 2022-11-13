@@ -1,12 +1,17 @@
 <template>
-  <div class="showcase" ref="showcase">
-    <product-cart v-for="item in products"
-                  :key="item.id"
-                  :product="item"
-                  :removeButton="showRmBtn"
-    />
+  <div ref="showcase">
+    <TransitionGroup name="list" tag="div" class="showcase">
+      <product-cart v-for="item in products"
+                    :key="item.id"
+                    :product="item"
+                    :removeButton="showRmBtn"
+      />
+      <div class="fake" key="fake1"></div>
+      <div class="fake" key="fake2"></div>
+      <div class="fake" key="fake3"></div>
+    </TransitionGroup>
+    <loading-status/>
   </div>
-  <loading-status/>
 </template>
 
 <script>
@@ -19,29 +24,28 @@ export default {
   name: "ShowCase",
   components: {ProductCart, LoadingStatus},
   props: ['showRmBtn'],
+  data: () => ({
+    timer: null
+  }),
   computed: {
     ...mapState([
       'products',
     ])
   },
   mounted() {
-    const timer = setInterval(() => {
+    store.dispatch('fetchData');
+
+    this.timer = setInterval(() => {
       const coords = this.$refs.showcase.getBoundingClientRect();
       if (coords.bottom - window.innerHeight < 250) {
-        fetch(`https://api.escuelajs.co/api/v1/products?offset=${store.state.pagination * 10}&limit=10`)
-            .then(res => {
-              if (!res.ok) throw new Error('Something went wrong');
-              return res.json();
-            })
-            .then(res => store.commit('SET_PRODUCT', res))
-            .catch(error => {
-              store.commit('SET_ERROR_LOAD');
-              clearInterval(timer);
-              console.log(error);
-            })
+        store.dispatch('fetchData');
+        if (store.state.errorLoad) clearInterval(this.timer);
       }
-    }, 1000)
+    }, 250)
   },
+  unmounted() {
+    clearInterval(this.timer);
+  }
 }
 </script>
 
@@ -52,5 +56,26 @@ export default {
   justify-content: space-around;
   gap: 20px;
   margin-top: 1rem;
+}
+
+.fake {
+  flex: 1;
+  flex-basis: 300px;
+}
+
+.list-move,
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.5s ease;
+}
+
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+  transform: scale(0);
+}
+
+.list-leave-active {
+  position: absolute;
 }
 </style>

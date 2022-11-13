@@ -4,23 +4,20 @@
          class="error">
       {{ errorLoad }}
     </div>
-    <div v-else-if="lengthOfProductsList === 0">
+    <div v-else>
       <img src="@/assets/images/svg/loader.svg">
     </div>
   </div>
 </template>
 
 <script>
-import {mapGetters, mapState} from "vuex";
+import {mapState} from "vuex";
 
 export default {
   name: "LoadingStatus",
   computed: {
     ...mapState([
         "errorLoad"
-    ]),
-    ...mapGetters([
-        "lengthOfProductsList"
     ])
   }
 

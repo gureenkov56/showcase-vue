@@ -37,19 +37,19 @@ export default {
     removeProducts(id) {
       store.commit('REMOVE_PRODUCT', id);
     }
-  }
+  },
 }
 </script>
 
 <style lang="scss" scoped>
 .product-cart {
   position: relative;
-  width: 300px;
+  flex-basis: 300px;
+  flex-grow: 1;
   border-radius: 6px;
   background-color: #fff;
   cursor: pointer;
   transition: box-shadow .3s;
-  flex-grow: 1;
 
   &__remove-btn {
     position: absolute;
@@ -76,10 +76,11 @@ export default {
   }
 
   &__image {
+    height: 200px;
     img {
       width: 100%;
       border-radius: 6px 6px 0 0;
-      max-height: 200px;
+      height: 100%;
       object-fit: cover;
     }
   }

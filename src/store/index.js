@@ -6,11 +6,6 @@ export default createStore({
     errorLoad: '',
     pagination: 0,
   },
-  getters: {
-    lengthOfProductsList(state) {
-      return state.products.length;
-    }
-  },
   mutations: {
     SET_PRODUCT(state, data) {
         state.products.push(...data);
@@ -42,6 +37,18 @@ export default createStore({
     }
   },
   actions: {
+    async fetchData({state, commit}) {
+      fetch(`https://api.escuelajs.co/api/v1/products?offset=${state.pagination * 10}&limit=10`)
+        .then(res => {
+          if (!res.ok) throw new Error('Something went wrong');
+          return res.json();
+        })
+        .then(res => commit('SET_PRODUCT', res))
+        .catch(error => {
+          commit('SET_ERROR_LOAD');
+          console.log(error);
+        })
+    }
   },
   modules: {
   }
