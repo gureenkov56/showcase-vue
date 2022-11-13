@@ -28,7 +28,7 @@
                  :class="{'error' : errorInRequired.includes('linkToImg')}"
                  type="text"
                  id="linkToImg"
-                 placeholder="Введите ссылку товара"
+                 placeholder="Введите ссылку изображения"
           >
           <div v-show="errorInRequired.includes('linkToImg')"
                class="error-text">
