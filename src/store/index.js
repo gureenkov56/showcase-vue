@@ -49,12 +49,12 @@ export default createStore({
         })
         .then(res => {
           commit('SET_PRODUCT', res);
-          state.loadInProgress = false;
         })
         .catch(error => {
           commit('SET_ERROR_LOAD');
           console.log(error);
         })
+        .finally(() => state.loadInProgress = false);
     }
   },
   modules: {
