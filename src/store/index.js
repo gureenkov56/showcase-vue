@@ -5,6 +5,7 @@ export default createStore({
     products: [],
     errorLoad: '',
     pagination: 0,
+    loadInProgress: false
   },
   mutations: {
     SET_PRODUCT(state, data) {
@@ -38,12 +39,18 @@ export default createStore({
   },
   actions: {
     async fetchData({state, commit}) {
+      if (state.loadInProgress) return;
+      state.loadInProgress = true;
+
       fetch(`https://api.escuelajs.co/api/v1/products?offset=${state.pagination * 10}&limit=10`)
         .then(res => {
           if (!res.ok) throw new Error('Something went wrong');
           return res.json();
         })
-        .then(res => commit('SET_PRODUCT', res))
+        .then(res => {
+          commit('SET_PRODUCT', res);
+          state.loadInProgress = false;
+        })
         .catch(error => {
           commit('SET_ERROR_LOAD');
           console.log(error);
